@@ -1,7 +1,7 @@
 ﻿@page "/"
 
-<div class="px-3 d-flex flex-column justify-content-center">
-    <img class="mx-auto" src="imgs/rtc_icon.png"/>
+<div class="px-3 d-flex flex-column justify-content-center pt-5">
+    <img class="mx-auto py-3" src="imgs/rtc_icon.png"/>
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="username" placeholder="Username" autofocus @bind="username"
                 @bind:event="oninput" @ref="usernameInput" @onkeyup="OnUsernameKeyUp">

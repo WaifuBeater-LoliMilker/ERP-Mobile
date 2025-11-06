@@ -41,9 +41,9 @@ namespace ERP_Mobile.Components.Pages
         {
             try
             {
-                await JS.InvokeVoidAsync("toggleLoading", true);
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-                    throw new Exception("Please enter username/password");
+                    throw new InvalidDataException("Vui lòng nhập tên đăng nhập/mật khẩu.");
+                await JS.InvokeVoidAsync("toggleLoading", true);
                 var payload = new
                 {
                     LoginName = username,
@@ -53,7 +53,7 @@ namespace ERP_Mobile.Components.Pages
                 var jsonContent = new StringContent(serialized,
                     Encoding.UTF8,
                     "application/json");
-                var response = await apiService.Client.PostAsync($"api/api/home/login", jsonContent);
+                var response = await apiService.Client.PostAsync($"api/home/login", jsonContent);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -66,10 +66,15 @@ namespace ERP_Mobile.Components.Pages
                 await JS.InvokeVoidAsync("toggleLoading", false);
                 Nav.NavigateTo($"/menu");
             }
+            catch(InvalidDataException ex)
+            {
+                await JS.InvokeVoidAsync("toggleLoading", false);
+                await alertService.ShowAsync("Thông báo", ex.Message, "OK");
+            }
             catch
             {
                 await JS.InvokeVoidAsync("toggleLoading", false);
-                await alertService.ShowAsync("Notice", "Username or password is incorrect", "OK");
+                await alertService.ShowAsync("Thông báo", "Tên đăng nhập hoặc mật khẩu không chính xác.", "OK");
             }
         }
     }

@@ -18,7 +18,7 @@
 
         public (string ip, int port) LoadServerSettings()
         {
-            string ip = Preferences.Get(IpKey, "192.168.1.2");
+            string ip = Preferences.Get(IpKey, "10.20.29.65");
             int port = Preferences.Get(PortKey, 8088);
             return (ip, port);
 

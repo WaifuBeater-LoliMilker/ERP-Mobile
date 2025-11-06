@@ -1,0 +1,27 @@
+﻿.menu-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #ffffff;
+}
+
+    .menu-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        cursor: pointer;
+    }
+    .menu-item img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+    }
+.disabled-menu {
+    opacity: 0.4;
+    filter: grayscale(100%);
+    pointer-events: none;
+    box-shadow: none !important;
+}
+
+    .disabled-menu:hover {
+        transform: none !important;
+        box-shadow: none !important;
+        cursor: not-allowed;
+    }

@@ -18,7 +18,7 @@ namespace ERP_Mobile.Services
             var (ip, port) = _apiSettings.LoadServerSettings();
             Client = new HttpClient
             {
-                BaseAddress = new Uri($"http://{ip}:{port}/")
+                BaseAddress = new Uri($"http://{ip}:{port}/rerpapi/")
             };
             Client.DefaultRequestHeaders.Add("Accept", "application/json");
         }
