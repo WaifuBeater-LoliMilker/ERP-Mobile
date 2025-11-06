@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ERP_Mobile.Components.Pages
 {
-    public partial class Home
+    public partial class Login
     {
         [Inject] private NavigationManager Nav { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
@@ -23,6 +23,11 @@ namespace ERP_Mobile.Components.Pages
         private ElementReference usernameInput;
         private ElementReference passwordInput;
 
+        protected override Task OnAfterRenderAsync(bool firstRender)
+        {
+            Preferences.Set("Token", "");
+            return Task.CompletedTask;
+        }
         public async Task OnUsernameKeyUp(KeyboardEventArgs e)
         {
             if (e.Code == "Enter" || e.Key == "Enter" || e.Code == "NumpadEnter")
