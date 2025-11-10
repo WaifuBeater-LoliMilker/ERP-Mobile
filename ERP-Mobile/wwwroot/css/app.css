@@ -72,3 +72,9 @@
         padding-left: env(safe-area-inset-left);
     }
 }
+
+/*Custom styles*/
+.btn-back{
+    position: absolute;
+    color: black !important;
+}
