@@ -6,7 +6,7 @@
         <h3 class="fw-bold">@BillImportCode</h3>
     </div>
     <div class="overflow-auto pb-3 px-2">
-        <table class="table table-hover table-striped table-bordered border-primary mb-0" style="table-layout:fixed">
+        <table class="table table-bordered border-primary mb-0" style="table-layout:fixed">
             <colgroup>
                 <col style="width:150px">
                 <col style="width:150px">
@@ -30,9 +30,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in products)
+                @for (int i = 0; i < products.Count; i++)
                 {
-                    <tr @onclick='() => OnRowClicked(item.ID)'>
+                    var item = products[i];
+                    <tr @onclick='() => OnRowClicked(item)' class='@GetRowClass(productSerialStatuses[i])'>
                         <td class="text-start align-middle">@item.ProductNewCode</td>
                         <td class="text-start align-middle">@item.ProductCode</td>
                         <td class="text-start align-middle">@item.ProductName</td>

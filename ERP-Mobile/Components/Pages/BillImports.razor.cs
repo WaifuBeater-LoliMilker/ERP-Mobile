@@ -22,7 +22,7 @@ namespace ERP_Mobile.Components.Pages
         private string filterText { get; set; } = "";
         private DateTime dateStart { get; set; } = DateTime.Now.AddDays(-14).Date;
         private DateTime dateEnd { get; set; } = DateTime.Now;
-        private List<Models.BillImport> billImport = [];
+        private List<Models.BillImports> billImport = [];
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             try
@@ -60,7 +60,7 @@ namespace ERP_Mobile.Components.Pages
                 "application/json");
             var token = Preferences.Get("Token", "");
             apiService.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await apiService.Client.PostAsync($"api/BillImport", jsonContent);
+            var response = await apiService.Client.PostAsync($"api/BillImport/get-all", jsonContent);
 
             if (!response.IsSuccessStatusCode)
             {

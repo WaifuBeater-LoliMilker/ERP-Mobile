@@ -3,6 +3,10 @@ window.setFocus = (element) => {
         element.focus();
     }
 };
+window.setFocusById = function (id) {
+    const el = document.getElementById(id);
+    if (el) el.focus();
+};
 window.preventBackNavigation = function () {
     history.pushState(null, "", location.href);
     window.onpopstate = function () {

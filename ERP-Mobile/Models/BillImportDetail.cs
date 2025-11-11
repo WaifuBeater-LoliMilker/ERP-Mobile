@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERP_Mobile.Models
 {
-    public class ProductItems
+    public class BillImportDetails
     {
         public string ProductCode { get; set; }
         public string ProductNewCode { get; set; }

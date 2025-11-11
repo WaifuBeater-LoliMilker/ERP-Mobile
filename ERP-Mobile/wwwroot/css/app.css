@@ -77,4 +77,5 @@
 .btn-back{
     position: absolute;
     color: black !important;
+    z-index: 999;
 }

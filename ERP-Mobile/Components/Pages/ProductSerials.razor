@@ -1,0 +1,42 @@
+﻿@page "/product-serials"
+<div class="d-flex flex-column w-100 h-100 pt-1">
+    <button class="btn btn-outline-light btn-back ms-1" @onclick='OnBrowserBack'><i class="fa-solid fa-arrow-left"></i></button>
+    <div class="d-flex justify-content-center text-center align-middle pb-2">
+        <h3 class="fw-bold text-break">@ProductCode - @ProductName</h3>
+    </div>
+    <div class="overflow-auto pb-3 px-2">
+        <table class="table table-hover table-striped table-bordered border-primary mb-0" style="table-layout:fixed">
+            <colgroup>
+                <col style="width:48px;font-size:14px">
+                <col style="width:50%;font-size:14px">
+                <col style="width:50%;font-size:14px">
+            </colgroup>
+            <thead class="table-light text-center align-middle sticky-top">
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Serial Number</th>
+                    <th class="text-center">Serial Number RTC</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int idx = 0; idx < serialsData.Count; idx++)
+                {
+                    int i = idx;
+                    <tr>
+                        <td class="text-center align-middle">@(serialsData[i].STT)</td>
+                        <td class="text-start align-middle">
+                            <input type="text" id="serial-@i" class="form-control"
+                                   @bind='serialsData[i].SerialNumber' @bind:event="oninput"
+                                   @onkeydown="@(e => OnEnterKey(e, i, "serial"))" />
+                        </td>
+                        <td class="text-start align-middle">
+                            <input type="text" id="rtc-@i" class="form-control"
+                                   @bind='serialsData[i].SerialNumberRTC' @bind:event="oninput"
+                                   @onkeydown="@(e => OnEnterKey(e, i, "rtc"))" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

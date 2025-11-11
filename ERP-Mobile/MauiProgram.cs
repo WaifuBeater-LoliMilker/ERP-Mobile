@@ -20,6 +20,7 @@ namespace ERP_Mobile
             builder.Services.AddSingleton<IAlertService, AlertService>();
             builder.Services.AddSingleton<IApiSettings, ApiSettings>();
             builder.Services.AddSingleton<IApiService, ApiService>();
+            builder.Services.AddSingleton<IProductSerialDataService, ProductSerialDataService>();
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();

@@ -1,1 +1,12 @@
-﻿
+﻿.empty td{
+    background-color: #ff6a00;
+}
+.in-process td {
+    background-color: #ffd800;
+}
+.finished td {
+    background-color: #4cff00;
+}
+.unknown td {
+    background-color: #808080;
+}

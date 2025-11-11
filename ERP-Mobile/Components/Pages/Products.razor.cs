@@ -22,12 +22,14 @@ namespace ERP_Mobile.Components.Pages
         [SupplyParameterFromQuery(Name = "bill-import-code")]
         public string? BillImportCode { get; set; }
 
+        private readonly CancellationTokenSource _cts = new ();
         [Inject] private NavigationManager Nav { get; set; } = default!;
         [Inject] private IJSRuntime JS { get; set; } = default!;
         [Inject] private IApiService apiService { get; set; } = default!;
         [Inject] private IAlertService alertService { get; set; } = default!;
-        private List<ProductItems> products { get; set; } = [];
-
+        [Inject] private IProductSerialDataService productDataService { get; set; } = default!;
+        private List<BillImportDetails> products { get; set; } = [];
+        private int[] productSerialStatuses { get; set; } = [];
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             try
@@ -55,20 +57,39 @@ namespace ERP_Mobile.Components.Pages
                 throw new Exception("Load dữ liệu thất bại.");
             }
             var json = await response.Content.ReadAsStringAsync();
-            var productsDTO = JsonConvert.DeserializeObject<ProductItemsDTO>(json, new JsonSerializerSettings
+            var billImportDetailsDTO = JsonConvert.DeserializeObject<BillImportDetailsDTO>(json, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore
             });
-            products = productsDTO?.data ?? [];
+            products = billImportDetailsDTO?.data ?? [];
+            productSerialStatuses = new int[products.Count];
+            for (int i = 0; i < products.Count; i++)
+            {
+                var product = products[i];
+                await Task.Run(async () =>
+                {
+                    productSerialStatuses[i] = await productDataService.SaveData(product);
+                }, _cts.Token);
+            }
             StateHasChanged();
         }
-        private void OnRowClicked(int id)
+        private void OnRowClicked(BillImportDetails item)
         {
-
+            Nav.NavigateTo($"/product-serials?product-code={item.ProductCode}&product-name={item.ProductName}&detail-id={item.ID}");
         }
         private void OnBrowserBack()
         {
+            _cts?.Cancel();
+            _cts?.Dispose();
+            productDataService.ClearData();
             Nav.NavigateTo("/bill-imports");
+        }
+        private static string GetRowClass(int status)
+        {
+            if (status == 1) return "empty";
+            if (status == 2) return "in-process";
+            if (status == 3) return "finished";
+            return "unknown";
         }
     }
 }

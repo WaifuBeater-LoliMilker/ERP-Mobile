@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ERP_Mobile.Models.DTO
 {
-    public class BillImportDTO
+    public class BillImportDetailsDTO
     {
         public int status { get; set; }
-        public List<BillImports> data { get; set; }
-        public int totalPage { get; set; }
+        public List<BillImportDetails> data { get; set; } = [];
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERP_Mobile.Models
 {
-    public class BillImport
+    public class BillImports
     {
         public int TotalPage { get; set; } = 0;
         public int RowNum { get; set; } = 0;
