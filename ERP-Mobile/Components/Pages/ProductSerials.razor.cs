@@ -34,20 +34,33 @@ namespace ERP_Mobile.Components.Pages
                 ProductCode = data?.details.ProductCode;
                 ProductName = data?.details.ProductName;
                 serialsData = data?.serials ?? [];
-                if (data != null && serialsData.Count < data.details.QtyRequest)
+                if (data != null)
                 {
-                    int missing = (int)data.details.QtyRequest - serialsData.Count;
-                    int maxSTT = serialsData.Count == 0 ? 0 : serialsData.Max(d => d.STT);
-                    for (int i = 0; i < missing; i++)
+                    int qtyRequest = (int)data.details.QtyRequest;
+                    int currentCount = serialsData.Count;
+
+                    if (currentCount < qtyRequest)
                     {
-                        serialsData.Add(new Models.ProductSerials
+                        int missing = qtyRequest - currentCount;
+                        int maxSTT = currentCount == 0 ? 0 : serialsData.Max(d => d.STT);
+
+                        for (int i = 0; i < missing; i++)
                         {
-                            ID = 0,
-                            BillImportDetailID = data.details.ID,
-                            STT = maxSTT + i + 1,
-                            SerialNumber = "",
-                            SerialNumberRTC = "",
-                        });
+                            serialsData.Add(new Models.ProductSerials
+                            {
+                                ID = 0,
+                                BillImportDetailID = data.details.ID,
+                                STT = maxSTT + i + 1,
+                                SerialNumber = "",
+                                SerialNumberRTC = "",
+                            });
+                        }
+                    }
+                    else if (currentCount > qtyRequest)
+                    {
+                        serialsData = [.. serialsData
+                            .OrderBy(d => d.STT)
+                            .Take(qtyRequest)];
                     }
                 }
                 StateHasChanged();

@@ -1,0 +1,10 @@
+﻿@page "/settings"
+
+<div class="container h-100 pt-5">
+    <div class="input-group mb-3">
+        <span class="input-group-text text-center align-middle" for="address">Address</span>
+        <input type="text" id="address" class="form-control" placeholder="Address"
+               @bind="address" @bind:event="oninput" @ref="addressInput" @onkeyup="OnInputKeyUp" tabindex="1">
+    </div>
+    <button class="btn btn-primary" @onclick="OnSave" @ref="saveButton" tabindex="3">Save</button>
+</div>

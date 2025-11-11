@@ -1,3 +1,13 @@
 ﻿img{
     max-width: min(266px, 90%);
 }
+.setting-icon{
+    width: 24px;
+    max-width: 24px;
+    height: 24px;
+}
+.btn-settings{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

@@ -82,5 +82,9 @@ namespace ERP_Mobile.Components.Pages
                 await alertService.ShowAsync("Thông báo", "Tên đăng nhập hoặc mật khẩu không chính xác.", "OK");
             }
         }
+        public void OnSettingClicked()
+        {
+            Nav.NavigateTo($"/settings");
+        }
     }
 }

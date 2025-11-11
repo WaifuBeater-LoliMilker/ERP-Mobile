@@ -49,6 +49,7 @@ namespace ERP_Mobile.Components.Pages
         }
         private async Task LoadData()
         {
+            productDataService.ClearData();
             var token = Preferences.Get("Token", "");
             apiService.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await apiService.Client.GetAsync($"api/billimportdetail/billimportid/{BillImportId}");
@@ -77,12 +78,12 @@ namespace ERP_Mobile.Components.Pages
         {
             Nav.NavigateTo($"/product-serials?product-code={item.ProductCode}&product-name={item.ProductName}&detail-id={item.ID}");
         }
-        private void OnBrowserBack()
+        private async Task OnBrowserBack()
         {
             _cts?.Cancel();
             _cts?.Dispose();
             productDataService.ClearData();
-            Nav.NavigateTo("/bill-imports");
+            await JS.InvokeVoidAsync("history.back");
         }
         private static string GetRowClass(int status)
         {

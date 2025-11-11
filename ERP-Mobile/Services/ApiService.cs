@@ -6,7 +6,7 @@ namespace ERP_Mobile.Services
     public interface IApiService
     {
         public HttpClient Client { get; set; }
-        public void SetBaseUrl(string ip, int port);
+        public void SetBaseUrl(string address);
     }
     public class ApiService : IApiService
     {
@@ -15,23 +15,21 @@ namespace ERP_Mobile.Services
         public ApiService(IApiSettings apiSettings)
         {
             _apiSettings = apiSettings;
-            var (ip, port) = _apiSettings.LoadServerSettings();
+            var address = _apiSettings.LoadServerSettings();
             Client = new HttpClient
             {
-                BaseAddress = new Uri($"http://{ip}:{port}/rerpapi/")
+                BaseAddress = new Uri(address)
             };
             Client.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
-        public void SetBaseUrl(string ip, int port)
+        public void SetBaseUrl(string address)
         {
-            var newBaseUrl = $"http://{ip}:{port}/";
-            if (string.IsNullOrWhiteSpace(newBaseUrl))
-                throw new ArgumentException("Base URL cannot be empty.", nameof(newBaseUrl));
-            Preferences.Set("BaseURL", newBaseUrl);
+            if (string.IsNullOrWhiteSpace(address))
+                throw new ArgumentException("Base URL cannot be empty.", nameof(address));
             Client = new HttpClient
             {
-                BaseAddress = new Uri(newBaseUrl)
+                BaseAddress = new Uri(address)
             };
         }
     }

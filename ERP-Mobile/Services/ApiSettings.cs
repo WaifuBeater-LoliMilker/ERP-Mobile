@@ -2,25 +2,22 @@
 {
     public interface IApiSettings
     {
-        public void SaveServerSettings(string ip, int port);
-        public (string ip, int port) LoadServerSettings();
+        public void SaveServerSettings(string address);
+        public string LoadServerSettings();
     }
     public class ApiSettings : IApiSettings
     {
-        private const string IpKey = "ServerIP";
-        private const string PortKey = "ServerPort";
+        private const string Address = "BaseURLAddress";
 
-        public void SaveServerSettings(string ip, int port)
+        public void SaveServerSettings(string address)
         {
-            Preferences.Set(IpKey, ip);
-            Preferences.Set(PortKey, port);
+            Preferences.Set(Address, address);
         }
 
-        public (string ip, int port) LoadServerSettings()
+        public string LoadServerSettings()
         {
-            string ip = Preferences.Get(IpKey, "10.20.29.65");
-            int port = Preferences.Get(PortKey, 8088);
-            return (ip, port);
+            string address = Preferences.Get(Address, "http://10.20.29.65:8088/rerpapi/");
+            return address;
 
         }
     }

@@ -78,9 +78,9 @@ namespace ERP_Mobile.Components.Pages
         {
             Nav.NavigateTo($"/products?bill-import-id={id}&bill-import-code={name}");
         }
-        private void OnBrowserBack()
+        private async Task OnBrowserBack()
         {
-            Nav.NavigateTo("/menu");
+            await JS.InvokeVoidAsync("history.back");
         }
     }
 }

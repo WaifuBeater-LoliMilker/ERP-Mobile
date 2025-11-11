@@ -10,3 +10,20 @@
 .unknown td {
     background-color: #808080;
 }
+.label-empty {
+    background-color: #ff6a00;
+}
+.label-in-process {
+    background-color: #ffd800;
+}
+.label-finished {
+    background-color: #4cff00;
+}
+.label-unknown {
+    background-color: #808080;
+}
+.color-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
