@@ -7,6 +7,10 @@ window.setFocusById = function (id) {
     const el = document.getElementById(id);
     if (el) el.focus();
 };
+window.clearInputById = function (id) {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+}
 window.preventBackNavigation = function () {
     history.pushState(null, "", location.href);
     window.onpopstate = function () {

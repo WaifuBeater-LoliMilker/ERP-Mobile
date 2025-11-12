@@ -72,12 +72,6 @@ namespace ERP_Mobile.Components.Pages
             if (e.Code == "Enter" || e.Key == "Enter" || e.Code == "NumpadEnter")
             {
                 int nextIndex = currentIndex + 1;
-
-                if (nextIndex < serialsData.Count)
-                {
-                    string nextId = $"{column}-{nextIndex}";
-                    await JS.InvokeVoidAsync("setFocusById", nextId);
-                }
                 try
                 {
                     await Task.Run(async () =>
@@ -89,17 +83,23 @@ namespace ERP_Mobile.Components.Pages
                         Encoding.UTF8,
                         "application/json");
                         var response = await apiService.Client.PostAsync($"api/billimportdetailserialnumber/save-data", jsonContent);
-                        //if (!response.IsSuccessStatusCode)
-                        //{
-                        //    throw new Exception("Thao tác thất bại");
-                        //}
                         var json = await response.Content.ReadAsStringAsync();
                         var productSerialsDTO = JsonConvert.DeserializeObject<ProductSerialsDTO>(json);
-                        if (productSerialsDTO?.status != 1) throw new Exception(productSerialsDTO?.message ?? "Thao tác thất bại");
+                        if (productSerialsDTO?.status != 1)
+                        {
+                            throw new Exception(productSerialsDTO?.message ?? "Thao tác thất bại");
+                        }
+                        if (nextIndex < serialsData.Count)
+                        {
+                            string nextId = $"{column}-{nextIndex}";
+                            await JS.InvokeVoidAsync("setFocusById", nextId);
+                        }
                     });
                 }
                 catch(Exception ex)
-                {
+                {           
+                    string currentId = $"{column}-{currentIndex}";
+                    await JS.InvokeVoidAsync("clearInputById", currentId);
                     await alertService.ShowAsync("Thông báo", ex.Message, "OK");
                 }
             }
